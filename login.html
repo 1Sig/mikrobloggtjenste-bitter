@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logg inn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><img src="IMG\Logo.png" alt="Logo" class="nav-logo"></li>
+            <li><a href="index.html">Hjem</a></li>
+            <li><a href="login.html">Logg inn</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Logg inn</h1>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Brukernavn" required>
+            <input type="password" id="password" placeholder="Passord" required>
+            <button type="submit">Logg inn</button>
+            <button type="button" onclick="showRegisterForm()">Registrer</button>
+        </form>
+        <form id="registerForm" style="display: none;">
+            <input type="text" id="newUsername" placeholder="Nytt brukernavn" required>
+            <input type="password" id="newPassword" placeholder="Nytt passord" required>
+            <button type="submit">Opprett bruker</button>
+            <button type="button" onclick="showLoginForm()">Tilbake til logg inn</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
