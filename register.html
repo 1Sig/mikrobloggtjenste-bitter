@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrer deg</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><img src="IMG\Logo.png" alt="Logo" class="nav-logo"></li>
+            <li><a href="index.html" class="nav-button">Hjem</a></li>
+            <li><a href="login.html" class="nav-button">Logg inn</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Registrer deg</h2>
+        <form action="/register" method="POST">
+            <div>
+                <label for="username">Brukernavn:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Passord:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Registrer</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
