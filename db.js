@@ -4,8 +4,7 @@ const MONGODB_URI = 'mongodb://10.12.15.70:27017/bitter';
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+    useUnifiedTopology: true
 });
 
 const db = mongoose.connection;

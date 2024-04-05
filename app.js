@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const connectMongoDBSession = require('connect-mongodb-session')(session);
@@ -8,6 +9,14 @@ const User = require('./models/user');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Middleware for å servere statiske filer fra public-mappen
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Setter opp enkel rute for rotstien som serverer index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Konfigurerer express-session
 const mongoDBStore = new connectMongoDBSession({
@@ -43,7 +52,8 @@ app.post('/register', async (req, res) => {
         const newUser = new User({ username, password });
         await newUser.save();
         req.session.userId = newUser._id;
-        res.send('Bruker registrert og logget inn');
+        req.session.isLoggedIn = true;
+        res.redirect('/index.html');
     } catch (error) {
         console.error(error);
         res.status(500).send('Noe gikk galt');
@@ -67,7 +77,8 @@ app.post('/login', async (req, res) => {
         }
 
         req.session.userId = user._id;
-        res.send('Innlogging vellykket');
+        req.session.isLoggedIn = true;
+        res.redirect('/index.html');
     } catch (error) {
         console.error(error);
         res.status(500).send('Noe gikk galt');
@@ -81,7 +92,7 @@ app.get('/logout', (req, res) => {
             console.error(err);
             res.status(500).send('Noe gikk galt');
         } else {
-            res.send('Du er logget ut');
+            res.redirect('/index.html');
         }
     });
 });

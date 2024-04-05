@@ -16,10 +16,18 @@
     </nav>
 
     <div class="container">
-        <div id="blogPosts"></div>
-        <form id="postForm">
-            <textarea id="postContent" placeholder="Skriv innlegg (maks 100 tegn)" maxlength="100" required></textarea>
-            <button type="submit">Legg til innlegg</button>
+        <h2>Logg inn</h2>
+        <form action="/login" method="POST">
+            <div>
+                <label for="username">Brukernavn:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Passord:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Logg inn</button>
+            <button onclick="location.href='/register.html'" type="button">Registrer</button>
         </form>
     </div>
     <script src="script.js"></script>

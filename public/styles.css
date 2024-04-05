@@ -79,3 +79,17 @@ button:hover {
     margin-bottom: 10px;
     background-color: #f9f9f9;
 }
+
+.register-button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.register-button:hover {
+    background-color: #0056b3;
+}
