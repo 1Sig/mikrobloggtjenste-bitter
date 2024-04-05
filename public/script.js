@@ -24,7 +24,7 @@ document.getElementById('postForm').addEventListener('submit', function(event) {
         displayPosts();
     } else {
         alert("Innlegg kan ikke være mer enn 100 tegn!");
-    }
+    } 
     document.getElementById('postContent').value = '';
 });
 
