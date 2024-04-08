@@ -1,0 +1,12 @@
+
+<nav>
+    <ul>
+        <li><img src="/IMG/Logo.png" alt="Logo" class="nav-logo"></li>
+        <li><a href="/index.ejs" class="nav-button">Hjem</a></li>
+        <% if (isloggedIn) { %>
+            <li><a href="/logout" class="nav-button">Logg ut</a></li>
+        <% } else { %>
+            <li><a href="/public/login.html" class="nav-button">Logg inn</a></li>
+        <% } %>
+    </ul>
+</nav>

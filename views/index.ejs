@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogg nettsted</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><img src="/IMG/Logo.png" alt="Logo" class="nav-logo"></li>
+            <li><a href="/index.ejs" class="nav-button">Hjem</a></li>
+            <% if (isloggedIn) { %>
+                <li><a href="/logout" class="nav-button">Logg ut</a></li>
+            <% } else { %>
+                <li><a href="/public/login.html" class="nav-button">Logg inn</a></li>
+            <% } %>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div id="blogPosts"></div>
+        <form id="postForm">
+            <textarea id="postContent" placeholder="Skriv innlegg (maks 100 tegn)" maxlength="100" required></textarea>
+            <button type="submit">Legg til innlegg</button>
+        </form>
+    </div>
+</body>
+</html>

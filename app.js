@@ -3,20 +3,31 @@ const path = require('path');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const connectMongoDBSession = require('connect-mongodb-session')(session);
+const moment = require('moment'); // for working with timestamps
 
 const db = require('./db');
 const User = require('./models/user');
+const BlogPost = require('./models/blogpost');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware for å servere statiske filer fra public-mappen
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
+                         
+const isloggedIn = (req) => {
+    return req.session && req.session.isLoggedIn === true;
+};
 
-// Setter opp enkel rute for rotstien som serverer index.html
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Middleware for å servere statiske filer fra public-mappen
+app.use(express.static(path.join(__dirname, 'public'), {
+    setHeaders: (res, filePath, stat) => {
+        if (filePath.endsWith('.css')) {
+            res.set('Content-Type', 'text/css');
+        }
+    }
+}));
+
+app.use(express.static(path.join(__dirname, 'views')));
 
 // Konfigurerer express-session
 const mongoDBStore = new connectMongoDBSession({
@@ -34,9 +45,40 @@ app.use(session({
 // Middleware for å parse request body
 app.use(express.urlencoded({ extended: true }));
 
-// Setter opp enkel rute for rotstien
+
 app.get('/', (req, res) => {
-    res.send('Velkommen til min Express-app!');
+    res.render('index', { title: 'Home', isloggedIn: isloggedIn(req) || false }); 
+});
+
+// Route for posting a blog
+app.post('/post', async (req, res) => {
+    try {
+        // Ensure user is logged in
+        if (!req.session.isLoggedIn) {
+            return res.status(401).send('Unauthorized');
+        }
+
+        // Extract blog content from request body
+        const { content } = req.body;
+
+        // Get user ID from session
+        const userId = req.session.userId;
+
+        // Create new BlogPost document
+        const newBlogPost = new BlogPost({
+            content: content,
+            author: userId, // Save user ID as author
+            createdAt: moment().toISOString() // Save current timestamp
+        });
+
+        // Save the new blog post to MongoDB
+        await newBlogPost.save();
+
+        res.status(201).send('Blog post created successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Something went wrong');
+    }
 });
 
 // Registreringsrute
